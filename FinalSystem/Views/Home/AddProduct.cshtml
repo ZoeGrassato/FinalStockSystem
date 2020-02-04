@@ -1,0 +1,41 @@
+﻿@using Nancy.Json;
+
+@model ProductModel;
+@{
+    ViewData["Title"] = "AddProduct";
+}
+
+<div class="product-div">
+    <h3 class="title-product"> New Product</h3>
+    <form method="post" class="form-styling">
+        <div class="mb-3 input-div">
+            <input id="Name" asp-for="Name" type="text" class="form-control input-styling" placeholder="Name">
+        </div>
+        <div class="mb-3 input-div">
+            <input id="Price" asp-for="Price" type="text" class="form-control input-styling" placeholder="Price">
+        </div>
+        <div class=" mb-3 input-div">
+            <input id="Description" asp-for="Description" type="text" class="form-control input-styling" placeholder="Description">
+        </div>
+
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span id="span-category">Choose A Category</span>
+            </button>
+            <div class="dropdown-menu dropdown-style" aria-labelledby="dropdownMenuButton">
+                @{
+                    JavaScriptSerializer ser = new JavaScriptSerializer();
+                }
+                @foreach (var item in Model.categories)
+                {
+
+                    var serialized = ser.Serialize(item.CategoryName);
+                    <a onclick="ValueSaver.save(@serialized)" class="dropdown-item" href="#">@item.CategoryName</a>
+                }
+            </div>
+        </div>
+        <div>
+            <button id="mButton" class="btn book-button"> <img class="image-tick" style="height: 63px;" src="https://img.icons8.com/color/96/000000/ok--v1.png" onclick="SendData.send()">Save</button>
+        </div>
+    </form>
+</div>
