@@ -1,0 +1,36 @@
+﻿@model ProductModel
+@{
+    ViewData["Title"] = "ProductList";
+}
+<div class="row">
+    <div class="col-1">
+    </div>
+    <div class="col-8">
+        @if (Model.productModels.Count() > 0)
+        {
+            <ul class="list-group ul-styling-list">
+                <li class="list-group-item active item-product item-heading">Products</li>
+                @foreach (var item in Model.productModels)
+                {
+                    <li class="list-group-item item-product">@item.Name</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div>
+                <h3>@Model.Name</h3>
+                <h3>@Model.Id</h3>
+            </div>
+        }
+    </div>
+    <div class="col-3">
+        <div class="search-div">
+            <i class="fas fa-angle-left expand-icon-styling" onclick="SearchBarManager.toggleSearchBar()"></i>
+            <img src="~/images/mag-final2.png" class="search-icon" onclick="ObjectSender.filter()" />
+            <input type="text" class="input-styling-search" />
+        </div>
+    </div>
+</div>
+
+

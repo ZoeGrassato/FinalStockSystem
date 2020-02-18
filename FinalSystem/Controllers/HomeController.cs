@@ -10,6 +10,9 @@ using FinalSystem.Generics;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using FinalSystem.DataBinding;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
+//using System.Web.Http;
 
 namespace FinalSystem.Controllers
 {
@@ -22,6 +25,13 @@ namespace FinalSystem.Controllers
         {
             _unitOfWork = unitOfWork;
         }
+        public Guid GetUniqueIdentifier()
+        {
+            var identity = (ClaimsIdentity)this.User.Identity;
+            var claim = identity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var userId = Guid.Parse(claim.Value);
+            return userId;
+        }
 
         public IActionResult ReturnLoginPage()
         {
@@ -30,12 +40,6 @@ namespace FinalSystem.Controllers
 
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
-                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-                var userId = claim.Value;
-            }
             return View();
         }
 
@@ -49,84 +53,7 @@ namespace FinalSystem.Controllers
             return View();
         }
 
-        public void SaveData([FromBody] ObjectBinder objectBinder)
-        {
-
-        }
-
-        public IActionResult AddProduct()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var newProd = new ProductModel();
-                newProd.categories = _unitOfWork.ProductCategoryRepository.GetItems().ToList();
-                return View(newProd);
-            }
-            else return View("Index");
-        }
-
-        //uses ajax
-        [HttpPost]
-        public void SaveProduct([FromBody] ObjectBinder product)
-        {
-            var identity = (ClaimsIdentity)this.User.Identity;
-            var claim = identity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            var userId = Guid.Parse(claim.Value);
-
-            var newProduct = new ProductModel();
-            var categories = _unitOfWork.ProductCategoryRepository.GetItems();
-            var current = categories.FirstOrDefault(x => x.CategoryName == product.CategoryName);
-
-            newProduct.Name = product.Name;
-            newProduct.Price = float.Parse(product.Price);
-            newProduct.Description = product.Description;
-            newProduct.ProductCategoryId = current.Id;
-            newProduct.ShopId = userId;
-
-            _unitOfWork.ProductRepository.AddItem(newProduct);
-            _unitOfWork.Save();
-        }
-
-
-        public IActionResult AddCategory(ProductCategoryModel productCategory)
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                var identity = (ClaimsIdentity)this.User.Identity;
-                var claim = identity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-                var userId = Guid.Parse(claim.Value);
-                if (productCategory.CategoryName == null)
-                {
-                    return View("AddCategory");
-                }
-                else
-                {
-                    SaveProdCategory(productCategory, userId);
-                    return View("Index");
-                }
-            }
-            return View("Index");
-        }
-
-        //uses mvc 
-        [HttpPost]
-        public void SaveProdCategory(ProductCategoryModel newCategory, Guid userId)
-        {
-            var category = new ProductCategoryModel();
-            category.CategoryName = newCategory.CategoryName;
-            category.ShopId = userId;
-            _unitOfWork.ProductCategoryRepository.AddItem(category);
-            _unitOfWork.Save();
-        }
-
-
-
-        public IActionResult ProductList()
-        {
-            return View();
-        }
-
-        public IActionResult CategoryList()
+        public IActionResult Delete()
         {
             return View();
         }

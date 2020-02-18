@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FinalSystem.DataBinding
 {
-    public class ObjectBinder
+    public class AddProductObjectBinder
     {
         public string Name { get; set; }
         public string CategoryName { get; set; }

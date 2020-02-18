@@ -1,4 +1,4 @@
-﻿/*@import url(//db.onlinewebfonts.com/c/7dc9ef4fe08e92b814e9c494dc95fd5f?family=Fairview);*/
+﻿@import url(site-responsive.css);
 
 a.navbar-brand {
     white-space: normal;
@@ -96,7 +96,6 @@ body {
 
 .header-div {
     position: relative;
-    bottom: 16px;
     padding: 0px !important;
     height: 300px;
     background: #e6e6e6;
@@ -156,7 +155,7 @@ body {
 }
 
 .div-icons {
-    padding-left: 610px;
+    padding-left: 28%;
     margin-top: 4%;
 }
 
@@ -209,6 +208,7 @@ body {
 .input-styling {
     border-radius: 0;
     text-align: center;
+    border: none;
 }
 
 .form-styling {
@@ -249,4 +249,218 @@ body {
 .save-styling {
     font-weight: 100;
     opacity: 0.8;
+}
+
+.ul-styling {
+    text-align: center;
+}
+
+.category-h3 {
+    text-align: center !important;
+    font-family: Fairview;
+    font-size: 247%;
+    padding-top: 2%;
+    padding-bottom: 1%;
+}
+
+
+.dropdown-toggle-delete-product {
+    background: #c3dff7;
+    width: 83%;
+    margin-left: 10%;
+    border-radius: 0;
+    background: #b0d2ef;
+    border: none !important;
+    height: 43px;
+}
+
+.title-delete-product {
+    text-align: center;
+    font-family: fairview;
+    font-size: 223%;
+    margin-bottom: 1%;
+    margin-top: 2%;
+    padding-left: 4%;
+}
+
+.dropdown-style-delete {
+    width: 83%;
+    text-align: center;
+}
+
+.dropdown-item:focus {
+    background: #d2d2d2 !important;
+}
+
+.dropdown-item:hover {
+    background: none !important;
+}
+
+.header-style {
+    font-family: fairview;
+    font-size: 157%;
+    font-weight: 500;
+}
+
+.thead-style {
+    background: #e0e0e0d1;
+}
+
+
+.trash-styling {
+    position: relative;
+    left: 50%;
+    top: 32px;
+}
+
+.trash-invalid {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.trash-valid {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.input-styling-delete {
+    width: 83%;
+    margin-left: 10%;
+    border-radius: 0;
+    background: #dcdcdc;
+    border: none !important;
+    height: 43px;
+}
+
+.login-div {
+    text-align: center;
+    font-family: Fairview;
+    font-size: 29px;
+    padding-top: 3%;
+}
+
+.input-login {
+    border-radius: 0px !important;
+    text-align: center;
+    border: none !important;
+}
+
+.login-button {
+    font-size: 23px;
+    color: #fff;
+    background-color: #cacaca;
+    width: 100%;
+    border-radius: 0px !important;
+    border: none !important;
+}
+
+    .login-button:hover {
+        background-color: #99acc1 !important;
+    }
+
+.form-control:focus {
+    background-color: rgb(232, 240, 254) !important;
+}
+
+.form-control {
+    background-color: rgb(232, 240, 254) !important;
+}
+
+#Input_Email-error {
+    font-size: 60%;
+}
+
+#Input_Password-error {
+    font-size: 60%;
+}
+
+.login-group {
+    padding-bottom: 3%;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.ul-styling-list {
+    margin-top: 2%;
+    border: none !important;
+    border-radius: 0px !important;
+}
+
+.item-product {
+    border-radius: 0px !important;
+}
+
+.item-heading {
+    background-color: #a5c5e8 !important;
+    border: none !important;
+}
+
+.search-icon {
+    color: #313131 !important;
+    height: 80px !important;
+    width: 85px !important;
+    position: absolute;
+    right: 71%;
+    top: 8%;
+    transition: transform .2s;
+    cursor: pointer;
+}
+
+    .search-icon:hover {
+        transform: scale(1.2, 1.2);
+    }
+
+/*.expand-icon-styling:hover + .input-styling {
+    width: 400px !important;
+}*/
+
+
+.input-styling-search {
+    -webkit-appearance: searchfield !important;
+    background: #e5edff;
+    width: 100px;
+    height: 65px;
+    transition: width .7s;
+    border-left: 5px solid #618eff;
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    color: black;
+    font-size: 17px;
+    padding-left: 17%;
+    font-weight: lighter;
+}
+
+    .input-styling-search:focus {
+        outline: none !important;
+        padding-left: 17%;
+    }
+
+.expand-icon-styling {
+    position: relative;
+    /*left: 86px;*/
+    height: 25px !important;
+    width: 25px !important;
+    top: 5px;
+    color: black;
+    opacity: 0.8;
+    cursor: pointer;
+
+}
+
+
+.input-styling-expanded {
+    width: 300px !important;
+    padding-left: 20%;
+}
+
+.search-div {
+    margin-top: 6%;
+}
+
+.row{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
 }

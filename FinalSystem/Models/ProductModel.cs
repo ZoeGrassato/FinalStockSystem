@@ -14,5 +14,6 @@ namespace FinalSystem.Models
         public int ProductCategoryId { get; set; }
         public Guid ShopId { get; set; }
         public IEnumerable<ProductCategoryModel> categories { get; set; }
+        public IEnumerable<ProductModel> productModels { get; set; }
     }
 }

@@ -1,0 +1,41 @@
+﻿@using Nancy.Json;
+@model DeleteSearchFilterModel
+@{
+    ViewData["Title"] = "DeleteProduct";
+}
+<div class="stuff">
+    @if (Model.ProductModels.Count() > 0)
+    {
+        <ul>
+            @foreach (var item in Model.ProductModels)
+            {
+            <li>@item.Name</li>
+            }
+        </ul>
+    }
+</div>
+
+<h3 class="title-delete-product">Select Product To Delete</h3>
+
+<div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle-delete-product" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span id="span-category">Product Category Dropdown</span>
+    </button>
+    <div class="dropdown-menu dropdown-style-delete" aria-labelledby="dropdownMenuButton">
+        @{
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+        }
+        @foreach (var item in Model.ProductCategoryModels)
+        {
+            var stored = ser.Serialize(item.CategoryName);
+            <a onclick="ValueSaver.save(@stored)" class="dropdown-item" href="#">@item.CategoryName</a>
+        }
+    </div>
+    <div>
+        <img onclick="ObjectSender.sendCategoryInfo()" class="trash-styling" src="https://img.icons8.com/cotton/64/000000/rocket.png">
+        @*<img src="~/images/bin.png" class="trash-styling trash-invalid" onclick="SendData.sendDeleteProductInfo()" />*@
+    </div>
+</div>
+
+
+
