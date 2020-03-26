@@ -8,6 +8,7 @@
 <ul class="list-group list-group-flush ul-styling">
     @foreach (var item in Model)
     {
-    <li class="list-group-item item-styling">@item.CategoryName </li>
+        <li class="list-group-item item-styling">@item.CategoryName <a asp-action="EditProductCategory" asp-route-id="@item.Id"><img src="~/images/pencil.png" style="height: 38px;cursor:pointer" /></a></li>
     }
 </ul>
+

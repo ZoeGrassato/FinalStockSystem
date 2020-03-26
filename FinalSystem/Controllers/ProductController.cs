@@ -115,16 +115,37 @@ namespace FinalSystem.Controllers
 
         public IActionResult EditProduct(int id)
         {
-            var model = _unitOfWork.ProductRepository.GetItem(id);
+            var item = _unitOfWork.ProductRepository.GetItem(id);
+            var categoryName = GetProductCategories().SingleOrDefault(x => x.Id == item.ProductCategoryId).CategoryName;
+
+            var model = new EditProductModel()
+            {
+                Id = id,
+                Name = item.Name,
+                Price = item.Price,
+                Description = item.Description,
+                categories = GetProductCategories(),
+                productModels = GetProducts(),
+                CategoryName = categoryName,
+                ProductCategoryId = item.ProductCategoryId
+            };
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult EditProduct([FromBody]ProductModel productModel)
+        public IActionResult EditProduct(EditProductModel productModel)
         {
-            _unitOfWork.ProductRepository.UpdateItem(productModel.Id, productModel);
+            var model = new ProductModel()
+            {
+                Name = productModel.Name,
+                Description = productModel.Description,
+                Price = productModel.Price,
+                ProductCategoryId = GetProductCategories().SingleOrDefault(x => x.CategoryName == productModel.CategoryName).Id,
+                Id = productModel.Id
+            };
+            _unitOfWork.ProductRepository.UpdateItem(model.Id, model);
             _unitOfWork.Save();
-            return RedirectToAction("Index");
+            return RedirectToAction("EditProductList");
         }
 
         [HttpGet]

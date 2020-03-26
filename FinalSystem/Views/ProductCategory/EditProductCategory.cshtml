@@ -1,0 +1,17 @@
+﻿@model ProductCategoryModel;
+@{
+    ViewData["Title"] = "AddCategory";
+}
+
+    @Html.HiddenFor(x => x.Id)
+    <div class="product-div">
+        <h3 class="title-product"> New Product Category</h3>
+        <form method="post" class="form-styling">
+            <div class="mb-3 input-div">
+                <input asp-for="CategoryName" type="text" class="form-control input-styling" placeholder="Name">
+            </div>
+            <div>
+                <button id="mButton" type="submit" class="btn book-button"> <img class="image-tick" style="height: 63px;" src="https://img.icons8.com/color/96/000000/ok--v1.png">Save</button>
+            </div>
+        </form>
+    </div>

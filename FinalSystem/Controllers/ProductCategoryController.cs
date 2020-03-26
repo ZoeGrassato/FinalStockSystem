@@ -83,5 +83,24 @@ namespace FinalSystem.Controllers
             _unitOfWork.ProductRepository.DeleteItem(GetProducts().SingleOrDefault(x => x.ProductCategoryId == product.Id).Id);
             _unitOfWork.Save();
         }
+
+        [HttpGet]
+        public IActionResult EditProductCategoryList()
+        {
+            return View(GetProductCategories());
+        }
+
+        public IActionResult EditProductCategory(int id)
+        {
+            var model = new ProductCategoryModel() { Id = id, CategoryName = GetProductCategories().SingleOrDefault(x => x.Id == id).CategoryName };
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult EditProductCategory(ProductCategoryModel productCategoryModel)
+        {
+            _unitOfWork.ProductCategoryRepository.UpdateItem(productCategoryModel.Id, productCategoryModel);
+            _unitOfWork.Save();
+            return RedirectToAction("EditProductCategoryList");
+        }
     }
 }

@@ -7,6 +7,9 @@
 var ValueSaver = {
     save: function (name) {
         document.getElementById('span-category').innerHTML = name;
+    },
+    updateSpan: function () {
+        document.getElementById('span-category').innerHTML = document.getElementById("ProdCategoryId");
     }
 };
 
@@ -47,7 +50,7 @@ var SendData = {
         });
     },
 
-    sendEditProductInfo() {
+    sendEditProductInfo(id) {
         $.ajax({
             url: `${baseUrl}/Product/EditProduct`,
             contentType: "application/json",
@@ -56,7 +59,8 @@ var SendData = {
                 Name: document.getElementById("Name").value,
                 CategoryName: document.getElementById('span-category').innerHTML,
                 Price: document.getElementById("Price").value,
-                Description: document.getElementById("Description").value
+                Description: document.getElementById("Description").value,
+                Id: id
             })
         }).done(function () {
             window.location.href = `${baseUrl}/Home/Add`;
@@ -163,7 +167,7 @@ var Remover = {
             console.log(e);
         });
     }
-}
+};
 
 
 

@@ -1,5 +1,9 @@
 ﻿@using Nancy.Json;
-@model ProductModel
+@model EditProductModel
+
+@Html.HiddenFor(x => x.CategoryName)
+@Html.HiddenFor(x => x.Name)
+@Html.HiddenFor(x => x.ProductCategoryId)
 
 <div class="product-div">
     <h3 class="title-product"> New Product</h3>
@@ -14,24 +18,15 @@
             <input asp-for="Description" id="Description" type="text" class="form-control input-styling" placeholder="Description">
         </div>
 
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span id="span-category">Choose A Category</span>
-            </button>
-            <div class="dropdown-menu dropdown-style" aria-labelledby="dropdownMenuButton">
-                @{
-                    JavaScriptSerializer ser = new JavaScriptSerializer();
-                }
-                @foreach (var item in Model.categories)
-                {
-
-                    var serialized = ser.Serialize(item.CategoryName);
-                    <a onclick="ValueSaver.save(@serialized)" class="dropdown-item" href="#">@item.CategoryName</a>
-                }
-            </div>
-        </div>
+        <select asp-for="CategoryName" class="btn btn-secondary dropdown-toggle" id="CategoryName" name="CategoryName" style="text-align:center;">
+            @foreach (var item in Model.categories)
+            {
+                <option><span style="text-align:center;">@item.CategoryName</span></option>
+            }
+        </select>
         <div>
-            <button id="mButton" class="btn book-button"> <img class="image-tick" style="height: 63px;" src="~/images/ok.png" onclick="SendData.sendProductInfo()">Save</button>
+            <button id="mButton" type="submit" class="btn book-button"> <img class="image-tick" style="height: 63px;" src="~/images/ok.png">Save</button>
         </div>
     </form>
 </div>
+

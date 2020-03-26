@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace FinalSystem.DataBinding
 {
-    public class AddProductObjectBinder
+    public class EditProductObjectBinder
     {
         public string Name { get; set; }
         public string CategoryName { get; set; }
         public string Price { get; set; }
         public string Description { get; set; }
-
+        public int Id { get; set; }
     }
 }
