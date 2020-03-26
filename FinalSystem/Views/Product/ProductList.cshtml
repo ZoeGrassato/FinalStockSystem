@@ -1,36 +1,54 @@
-﻿@model ProductModel
+﻿
+@model IEnumerable<ProductModel>
+
 @{
     ViewData["Title"] = "ProductList";
 }
-<div class="row">
-    <div class="col-1">
+
+<div class="col-12">
+    <div class="row">
+        <div class="col-3">
+            <form method="get" asp-action="ProductList">
+                <div class="search-div">
+                    <i class="fas fa-angle-left expand-icon-styling" onclick="SearchBarManager.toggleSearchBar()"></i>
+                    <button class="submitBtn" onclick="HistoryManager.manage()" style="padding:0; border:none;" type="submit"><img src="~/images/mag-final2.png" class="search-icon" /></button>
+                    <input type="search" value="@ViewData["GetDetails"]" name="ProductSearch" class="input-styling-search" />
+
+                </div>
+            </form>
+        </div>
+        <a class="image-list" asp-action="ProductList"><img src="~/images/list-search.png" /></a>
     </div>
-    <div class="col-8">
-        @if (Model.productModels.Count() > 0)
-        {
-            <ul class="list-group ul-styling-list">
-                <li class="list-group-item active item-product item-heading">Products</li>
-                @foreach (var item in Model.productModels)
-                {
-                    <li class="list-group-item item-product">@item.Name</li>
-                }
+
+    <div class="row">
+        <div class="col-2 some-div">
+            <ul id="myList">
             </ul>
-        }
-        else
-        {
-            <div>
-                <h3>@Model.Name</h3>
-                <h3>@Model.Id</h3>
-            </div>
-        }
-    </div>
-    <div class="col-3">
-        <div class="search-div">
-            <i class="fas fa-angle-left expand-icon-styling" onclick="SearchBarManager.toggleSearchBar()"></i>
-            <img src="~/images/mag-final2.png" class="search-icon" onclick="ObjectSender.filter()" />
-            <input type="text" class="input-styling-search" />
+        </div>
+        <div class="col-10 styling-table">
+            @if (Model.Count() > 0)
+            {
+                <ul class="list-group ul-styling-list">
+                    <li class="list-group-item active item-product item-heading">Products</li>
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item item-product">
+                            @item.Name
+                        </li>
+                    }
+                </ul>
+            }
         </div>
     </div>
 </div>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    var stored = localStorage["SomeKey"];
+    var object = JSON.parse(stored);
 
+    for (var i = 0; i < object.length; i++) {
+        var localThing = object[i];
+        $(`<li>${localThing}</li>`).appendTo("#myList");
+    }
+</script>

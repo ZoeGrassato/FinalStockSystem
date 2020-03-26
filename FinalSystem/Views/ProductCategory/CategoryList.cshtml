@@ -3,15 +3,11 @@
     ViewData["Title"] = "CategoryList";
 }
 
+
 <h3 class="category-h3">Product Categories</h3>
 <ul class="list-group list-group-flush ul-styling">
-    @for (int i = 0; i < 2; i++)
+    @foreach (var item in Model)
     {
-        <li class="list-group-item item-styling">Plants</li>
-        <li class="list-group-item item-styling">Accesories</li>
-        <li class="list-group-item item-styling">Stuff</li>
-        <li class="list-group-item item-styling">Some Thangs</li>
-        <li class="list-group-item item-styling">More Stuff</li>
+        <li class="list-group-item item-styling">@item.CategoryName</li>
     }
 </ul>
-

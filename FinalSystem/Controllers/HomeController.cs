@@ -43,6 +43,11 @@ namespace FinalSystem.Controllers
             return View();
         }
 
+        public IActionResult Edit()
+        {
+            return View();
+        }
+
         public IActionResult Add()
         {
             return View();
@@ -56,6 +61,11 @@ namespace FinalSystem.Controllers
         public IActionResult Delete()
         {
             return View();
+        }
+
+        public IActionResult NotificationToast()
+        {
+            return PartialView("_NotificationToast");
         }
 
         public IActionResult Privacy()

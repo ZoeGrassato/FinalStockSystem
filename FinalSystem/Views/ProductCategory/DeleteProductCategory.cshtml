@@ -1,0 +1,20 @@
+﻿@model IEnumerable<ProductCategoryModel>;
+@using Nancy.Json;
+@{
+    ViewData["Title"] = "CategoryList";
+}
+
+<h3 class="category-h3">Product Categories</h3>
+<ul class="list-group list-group-flush ul-styling">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item item-styling">
+            <span hidden id="IdHiddenCategory">@item.Id</span>
+            @{
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                var stored = ser.Serialize(item.Id);
+            }
+            @item.CategoryName <span><img onclick="Remover.removeCategory(@stored)" class="icon-trash jello" src="~/images/trash.svg" /></span>
+        </li>
+    }
+</ul>

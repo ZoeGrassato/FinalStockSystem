@@ -8,27 +8,33 @@
 <div class="row">
     <div class="col-3"></div>
     <div class="col-6 login-div">
+        <h2 class="login-div-title">
+            <span style="margin-left: 10%;">Login Form</span>
+            <span><img src="~/images/person.png" /></span>
+        </h2>
         <section>
             <form id="account" method="post">
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group login-group">
-                    <label asp-for="Input.Email"></label>
+                    <label asp-for="Input.Email" class="label-style"></label>
+                    <span><img src="~/images/email.png" /></span>
                     <input asp-for="Input.Email" class="form-control input-login" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group login-group">
-                    <label asp-for="Input.Password"></label>
+                    <label asp-for="Input.Password" class="label-style"></label>
+                    <span><img src="~/images/keysmall.png" /></span>
                     <input asp-for="Input.Password" class="form-control input-login" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
+                @*<div class="form-group">
+                        <div class="checkbox">
+                            <label asp-for="Input.RememberMe">
+                                <input asp-for="Input.RememberMe" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMe)
+                            </label>
+                        </div>
+                    </div>*@
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary login-button">Log in</button>
                 </div>
@@ -36,9 +42,9 @@
                     <p>
                         <a style="color:#7d7d7d; font-size: 19px;" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                     </p>
-                    @*<p>
+                    <p>
                         <a style="color:#000000;font-size: 19px;" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>*@
+                    </p>
                 </div>
             </form>
         </section>

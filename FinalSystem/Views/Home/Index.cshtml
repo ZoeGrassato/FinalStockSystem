@@ -9,13 +9,24 @@
     </div>
 </div>
 
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="div-icons">
+        <img onclick="Navigator.navigate('Add', 'Home')" class="icon-styling" src="~/images/add.png">
 
-<div class="div-icons">
-    <img onclick="Navigator.navigate('Add', 'Home')" class="icon-styling" src="~/images/add.png">
+        <img onclick="Navigator.navigate('List', 'Home')" class="icon-styling" src="~/images/list.png">
 
-    <img onclick="Navigator.navigate('List', 'Home')" class="icon-styling" src="~/images/list.png">
+        <img onclick="Navigator.navigate('Delete', 'Home')" class="icon-styling" src="~/images/delete-forever.png">
 
-    <img onclick="Navigator.navigate('Delete', 'Home')" class="icon-styling" src="~/images/delete-forever.png">
-
-    <img src="~/images/design.png" class="icon-styling">
+        <img onclick="Navigator.navigate('Edit', 'Home')" src="~/images/design.png" class="icon-styling">
+    </div>
+}
+else
+{
+<div class="jumbotron not-logged-in">
+    <h1 class="display-4" style="font-size: 3rem;">You need to be logged in to view this content :(</h1>
+    <hr class="my-4">
+    <p class="lead">Please login above</p>
 </div>
+}
+

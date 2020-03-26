@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using FinalSystem.DataBinding;
 using FinalSystem.Generics;
 using FinalSystem.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -40,7 +41,7 @@ namespace FinalSystem.Controllers
 
         public IActionResult DeleteProductCategory()
         {
-            return View();
+            return View(GetProductCategories());
         }
 
         public IActionResult AddCategory(ProductCategoryModel productCategory)
@@ -55,10 +56,10 @@ namespace FinalSystem.Controllers
                 else
                 {
                     SaveProdCategory(productCategory, userId);
-                    return View("Index");
+                    return RedirectToAction("Index", "Home");
                 }
             }
-            return View("Index");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -73,7 +74,14 @@ namespace FinalSystem.Controllers
 
         public IActionResult CategoryList()
         {
-            return View();
+            return View(GetProductCategories());
+        }
+
+        public void DeleteProductCategoryFromDb([FromBody]DeleteProductByIDObjectBinder product)
+        {
+            _unitOfWork.ProductCategoryRepository.DeleteItem(product.Id);
+            _unitOfWork.ProductRepository.DeleteItem(GetProducts().SingleOrDefault(x => x.ProductCategoryId == product.Id).Id);
+            _unitOfWork.Save();
         }
     }
 }

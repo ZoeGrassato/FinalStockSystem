@@ -8,6 +8,7 @@ using FinalSystem.Generics;
 using FinalSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ReflectionIT.Mvc.Paging;
 
 namespace FinalSystem.Controllers
 {
@@ -66,51 +67,70 @@ namespace FinalSystem.Controllers
             }
             else return View("Home/Index");
         }
-
-        [HttpPost]
-        public IActionResult FilterDeletionByCategory([FromBody] DeleteProductObjectBinder categoryInfo)
+        [HttpGet]
+        public IActionResult DeleteProduct(string ProductSearchDelete)
         {
-            var currentCategory = GetProductCategories().FirstOrDefault(x => x.CategoryName == categoryInfo.CategoryName);
-            var filteredProducts = GetProducts().Where(x => x.ProductCategoryId == currentCategory.Id).ToList();
-            //var model = new DeleteSearchFilterModel() { ProductCategoryModels = GetProductCategories().ToList(), ProductModels = filteredCategories };
-            return RedirectToAction("DeleteProduct", new { filteredProducts });
+            ViewData["GetDetailsDelete"] = ProductSearchDelete;
+            var query = from x in _unitOfWork.ProductRepository.GetItems() select x;
+            if (!String.IsNullOrEmpty(ProductSearchDelete))
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(ProductSearchDelete.ToLower())).OrderBy(x => x.Name).ToList();
+            }
+            return View(query);
         }
 
         [HttpPost]
-        public IActionResult DeleteProductMethod()
+        public void DeleteProductFromDb([FromBody] DeleteProductByIDObjectBinder product)
         {
-            //_unitOfWork.ProductRepository.DeleteItem(GetProducts()
-            //    .FirstOrDefault(x => x.Name == productToDelete.ProductName)
-            //    .Id);
-            //_unitOfWork.Save();
-            return View();
+            _unitOfWork.ProductRepository.DeleteItem(product.Id);
+            _unitOfWork.Save();
         }
 
-        public IActionResult DeleteProduct(List<ProductModel> productModels = null)
+        public IActionResult DeleteProduct()
         {
-            var validModels = new List<ProductModel>();
-            validModels = productModels.Count() > 0 ? productModels : new List<ProductModel>();
+            return View(GetProducts().OrderBy(x => x.Name));
+        }
 
-            var newItem = new DeleteSearchFilterModel() { ProductCategoryModels = GetProductCategories(), ProductModels = validModels };
-            return View("DeleteProduct", newItem);
+        public IActionResult ProductList(int page = 1)
+        {
+            var query = GetProducts().OrderBy(x => x.Name);
+            var model = PagingList.Create(query, 5, page);
+            return View(model);
+        }
+
+  
+
+        [HttpGet]
+        public IActionResult ProductList(string ProductSearch, int page = 1)
+        {
+            ViewData["GetDetails"] = ProductSearch;
+            var query = from x in _unitOfWork.ProductRepository.GetItems() select x;
+            if (!String.IsNullOrEmpty(ProductSearch))
+            {
+                query = query.Where(x => x.Name.Contains(ProductSearch)).ToList();
+            }
+            var model = PagingList.Create(query, 5, page);
+            return View(query);
+        }
+
+        public IActionResult EditProduct(int id)
+        {
+            var model = _unitOfWork.ProductRepository.GetItem(id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditProduct([FromBody]ProductModel productModel)
+        {
+            _unitOfWork.ProductRepository.UpdateItem(productModel.Id, productModel);
+            _unitOfWork.Save();
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult ProductList(ProductObjectBinder product)
+        public IActionResult EditProductList()
         {
-            
-            if (product != null)
-            {
-                var stored = new ProductModel() { productModels = GetProducts() };
-                return View(stored);
-            }
-            else
-            {
-                var selectedObject = GetProducts().Single(x => x.Name == product.ProductName);
-                var model = new ProductModel();
-                model = selectedObject;
-                return View(model);
-            }
+            return View(GetProducts());
         }
     }
 }

@@ -1,41 +1,56 @@
 ﻿@using Nancy.Json;
-@model DeleteSearchFilterModel
+@model IEnumerable<ProductModel>
 @{
     ViewData["Title"] = "DeleteProduct";
 }
-<div class="stuff">
-    @if (Model.ProductModels.Count() > 0)
-    {
-        <ul>
-            @foreach (var item in Model.ProductModels)
+
+<div class="col-12">
+    <div class="row">
+        <div class="col-3">
+            <form method="get" asp-action="DeleteProduct">
+                <div class="search-div">
+                    <i class="fas fa-angle-left expand-icon-styling" onclick="SearchBarManager.toggleSearchBar()"></i>
+                    <button class="submitBtn" onclick="HistoryManager.manage()" style="padding:0; border:none;" type="submit"><img src="~/images/mag-final2.png" class="search-icon" /></button>
+                    <input type="search" value="@ViewData["GetDetailsDelete"]" name="ProductSearchDelete" class="input-styling-search" />
+                </div>
+            </form>
+        </div>
+        <a class="image-list" asp-action="DeleteProduct"><img src="~/images/list-search.png" /></a>
+    </div>
+
+    <div class="row">
+        <div class="col-2 some-div">
+            <ul id="myList">
+            </ul>
+        </div>
+        <div class="col-10 styling-table">
+            @if (Model.Count() > 0)
             {
-            <li>@item.Name</li>
+                <ul class="list-group ul-styling-list">
+                    <li class="list-group-item active item-product item-heading">Products</li>
+                    @foreach (var item in Model)
+                    {
+                        <li class="list-group-item item-product">
+                            @{
+                                JavaScriptSerializer ser = new JavaScriptSerializer();
+                                var stored = ser.Serialize(item.Id);
+                            }
+                            @item.Name <span> <img onclick="Remover.removeProduct(@stored)" class="icon-trash jello" src="~/images/trash.svg" /></span>
+                        </li>
+                    }
+                </ul>
             }
-        </ul>
-    }
-</div>
-
-<h3 class="title-delete-product">Select Product To Delete</h3>
-
-<div class="dropdown">
-    <button class="btn btn-secondary dropdown-toggle-delete-product" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <span id="span-category">Product Category Dropdown</span>
-    </button>
-    <div class="dropdown-menu dropdown-style-delete" aria-labelledby="dropdownMenuButton">
-        @{
-            JavaScriptSerializer ser = new JavaScriptSerializer();
-        }
-        @foreach (var item in Model.ProductCategoryModels)
-        {
-            var stored = ser.Serialize(item.CategoryName);
-            <a onclick="ValueSaver.save(@stored)" class="dropdown-item" href="#">@item.CategoryName</a>
-        }
-    </div>
-    <div>
-        <img onclick="ObjectSender.sendCategoryInfo()" class="trash-styling" src="https://img.icons8.com/cotton/64/000000/rocket.png">
-        @*<img src="~/images/bin.png" class="trash-styling trash-invalid" onclick="SendData.sendDeleteProductInfo()" />*@
+            else
+            {
+                <div class="jumbotron no-results">
+                    <span class="no-values"> Search yielded no results :(</span>
+                </div>
+            }
+        </div>
     </div>
 </div>
+
+
 
 
 
